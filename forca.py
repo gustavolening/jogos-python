@@ -10,6 +10,9 @@ def jogar():
 
     #Enquanto não enforcou E não acertou
     while(not enforcou and not acertou):
+
+        chute = input("Qual a letra?")
+
         print("Jogando.........")
 
     print("Fim do jogo")
