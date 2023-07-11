@@ -2,7 +2,7 @@ import random
 
 def imrpime_mensagem_abertura():
     print("*********************************")
-    print("***Bem vindo ao jogo da Forca!***")
+    print("** Bem vindo ao jogo da Forca! **")
     print("*********************************")
 
 
@@ -27,44 +27,58 @@ def inicializa_letras_da_palavra(palavra):
 
     return lista
 
-def jogar():
-    imrpime_mensagem_abertura()
-    
-    palavra_secreta = carrega_palavra_secreta()
 
+def chute_do_jogador():
+    letra_do_chute = input("Qual a letra?").strip().upper() ##Strip serve para tirar os espaços antes e depois da palavra.
+    return letra_do_chute
+
+
+def validacao_chute_correto(palavra, chute, letras):
+    index = 0
+    for letra in palavra:
+        if (chute == letra):
+            letras[index] = letra
+        index += 1
+
+
+def imprime_mensagem_ganhador():
+    print("Você ganhou :) !!!")
+
+def imprime_mensagem_perdedor():
+    print("Você perdeu :( !!!")
+
+
+def jogar():
+
+    imrpime_mensagem_abertura()
+    palavra_secreta = carrega_palavra_secreta()
     letras_acertadas = inicializa_letras_da_palavra(palavra_secreta)
+
+    print("Fruta com {} letras!".format(str(letras_acertadas.count('_'))), "\n", letras_acertadas)
 
     enforcou = False
     acertou = False
     erros = 0
 
-    print("Fruta com {} letras!".format(str(letras_acertadas.count('_'))), "\n", letras_acertadas)
-
     #Enquanto não enforcou E não acertou
     while(not enforcou and not acertou):
 
-        chute = input("Qual a letra?").strip().upper() ##Strip serve para tirar os espaços antes e depois da palavra.
+        chute = chute_do_jogador()
 
         if(chute in palavra_secreta):
-            index = 0
-            for letra in palavra_secreta:
-                if(chute == letra):
-                    letras_acertadas[index] = letra
-                index += 1
+            validacao_chute_correto(palavra_secreta, chute, letras_acertadas)
         else:
             erros += 1
-
 
         enforcou = erros == 6
         acertou = '_' not in letras_acertadas
         print(letras_acertadas)
 
     if (acertou):
-        print("Você ganhou!!")
+        imprime_mensagem_ganhador()
     else:
-        print("Você perdeu!!")
+        imprime_mensagem_perdedor()
 
-    print("Fim do jogo")
 
 if(__name__ == "__main__"):
     jogar()
